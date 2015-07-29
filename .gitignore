@@ -1,0 +1,124 @@
+#Byte TRISA =0x85
+#Byte PORTA =0x05
+#Byte TRISB =0x86
+#Byte PORTB =0x06
+#Byte TRISC =0x87
+#Byte PORTC =0x07
+#Byte TRISD =0x88
+#Byte PORTD =0x08
+#Byte TRISE =0x89
+#Byte PORTE =0x09
+
+void main()
+{
+   output_low(PIN_C2); //CCP1
+   output_low(PIN_C1); //CCP2
+   output_low(PIN_B0);
+   output_low(PIN_B1);
+   output_low(PIN_B2);
+   output_low(PIN_B3);
+   
+   setup_ccp1(CCP_PWM);
+   setup_ccp2(CCP_PWM);
+   
+   setup_timer_2(T2_DIV_BY_16, 255, 1);
+   
+   TRISA=1;
+   TRISB=0;
+   
+   int vel=255,vel3=230,vel2=190,vel1=150,vel0=50;
+   int val1=0,val2=0,val3=0,val4=0,val5=0,val6=0,val7=0;
+   
+   while(1)
+   {
+      val1=bit_test(PORTA,0);
+      val2=bit_test(PORTA,1);
+      val3=bit_test(PORTA,2);
+      val4=bit_test(PORTA,3);
+      val5=bit_test(PORTA,4);
+      val6=bit_test(PORTA,5);
+      val7=bit_test(PORTE,0);
+      
+      if ((val1 == 0)&&(val2 == 0)&&(val3 == 1)&&(val4 == 0)&&(val5 == 0)&&(val6 == 1)&&(val7 == 1))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel);
+         set_pwm2_duty(vel);
+      }else if((val1 == 0)&&(val2 == 1)&&(val3 == 1)&&(val4 == 0)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel0);
+         set_pwm2_duty(vel1);
+      }else if((val1 == 0)&&(val2 == 0)&&(val3 == 1)&&(val4 == 1)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel1);
+         set_pwm2_duty(vel0);
+      }else if((val1 == 0)&&(val2 == 0)&&(val3 == 0)&&(val4 == 1)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel2);
+         set_pwm2_duty(vel0);
+      }else if((val1 == 0)&&(val2 == 0)&&(val3 == 0)&&(val4 == 1)&&(val5 == 1))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel3);
+         set_pwm2_duty(vel0);
+      }else if((val1 == 0)&&(val2 == 0)&&(val3 == 0)&&(val4 == 0)&&(val5 == 1))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel);
+         set_pwm2_duty(vel0);
+      }else if((val1 == 0)&&(val2 == 1)&&(val3 == 0)&&(val4 == 0)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel0);
+         set_pwm2_duty(vel2);
+      }else if((val1 == 1)&&(val2 == 1)&&(val3 == 0)&&(val4 == 0)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel0);
+         set_pwm2_duty(vel3);
+      }else if((val1 == 1)&&(val2 == 0)&&(val3 == 0)&&(val4 == 0)&&(val5 == 0))
+      {
+         output_high(PIN_B0);
+         output_low(PIN_B1);
+         output_high(PIN_B2);
+         output_low(PIN_B3);
+         set_pwm1_duty(vel0);
+         set_pwm2_duty(vel);
+      }else
+      {
+         output_low(PIN_B0);
+         output_low(PIN_B1);
+         output_low(PIN_B2);
+         output_low(PIN_B3);
+         
+      }
+      delay_ms(5);
+   }
+}
